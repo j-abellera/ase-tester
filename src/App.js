@@ -1,23 +1,62 @@
-import logo from './logo.svg';
 import './App.css';
+import { a5Answers } from './data/a5';
+import { useState, useEffect } from 'react';
+import Card from './Card';
 
 function App() {
+  const [a5, setA5] = useState(a5Answers);
+  const [question, setQuestion] = useState(0);
+  const [answer, setAnswer] = useState('');
+  const [showAns, setShowAns] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [score, setScore] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(a5.length);
+  }, [])
+
+  const onClick = e => {
+    const { name } = e.target;
+    e.preventDefault();
+    if (name === 'submit') {
+      if (answer === a5[question].answer.ans) {
+        setScore(score + 1);
+      }
+      setShowAns(true);
+      if (!disableSubmit) setDisableSubmit(true);
+    } else if (name === 'next') {
+      setDisableSubmit(false);
+      setShowAns(!showAns);
+      setAnswer('')
+      setQuestion(question + 1);
+    } else {
+      return null;
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+      <h1>Test</h1>
+      <div className='counter'>
+        <p>{`${score}/${total}`}</p>
+      </div>
+      <Card data={a5[question]} key={a5[question].id} setAnswer={setAnswer} setQuestion={setQuestion} showAns={showAns} />
+      <div className='btns'>
+        <input className='btn' type='submit' name='submit' onClick={onClick} disabled={disableSubmit && answer !== ''} />
+        <input className='btn' type='button' name='next' onClick={onClick} disabled={!disableSubmit} value='Next' />
+      </div>
+      <div className='answer-container' hidden={!showAns}>
+        <p
+          className={answer === a5[question].answer.ans
+            ? "ans-valid"
+            : "ans-wrong"}>
+          {answer === a5[question].answer.ans ? "Correct" : "Incorrect"}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <p>Answer:</p>
+        <h3>{a5[question].answer.ans}</h3>
+        <p>{a5[question].answer.description}</p>
+      </div>
     </div>
   );
 }

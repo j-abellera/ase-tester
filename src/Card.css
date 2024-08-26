@@ -1,0 +1,32 @@
+.card-container {
+    display: flex;
+    width: 800px;
+    min-height: 300px;
+    border: solid 5px black;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    row-gap: 15px;
+}
+
+.card-question {
+    width: 100%;
+    border: solid 1px red;
+    margin: auto;
+}
+
+.card-choice-container {
+    width: inherit;
+    border: solid 1px black;
+    display: flex;
+    flex-flow: column wrap;
+    text-align: left;
+    justify-content: center;
+    border: solid purple 2px;
+    padding: 0 25%;
+}
+
+.q-image {
+    border: solid 1px red;
+}
