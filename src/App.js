@@ -11,6 +11,9 @@ function App() {
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
+  const [attempted, setAttempted] = useState(1);
+  const [percentage, setPercentage] = useState(0);
+
 
   useEffect(() => {
     setTotal(a5.length);
@@ -30,6 +33,8 @@ function App() {
       setShowAns(!showAns);
       setAnswer('')
       setQuestion(question + 1);
+      setAttempted(attempted + 1);
+      setPercentage(Math.round((score/attempted) * 100));
     } else {
       return null;
     }
@@ -37,9 +42,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Test</h1>
+      <h1>ASE A5 Pracice Test</h1>
       <div className='counter'>
-        <p>{`${score}/${total}`}</p>
+        <p>{`${score}/${attempted} ${percentage}%`}</p>
+        <p>{`Total Questions: ${total}`}</p>
       </div>
       <Card data={a5[question]} key={a5[question].id} setAnswer={setAnswer} setQuestion={setQuestion} showAns={showAns} />
       <div className='btns'>
