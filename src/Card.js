@@ -2,7 +2,7 @@ import React from 'react';
 import './Card.css';
 
 const Card = ({ data, showAns, setAnswer }) => {
-    const { id, question, choices, answer } = data;
+    const { id, question, choices } = data;
     const image = data.image ? data.image : null;
     return (
         <div className='card-container'>

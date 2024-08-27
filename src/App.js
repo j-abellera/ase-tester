@@ -1,10 +1,12 @@
 import './App.css';
-import { a5Answers } from './data/a5';
+import * as a5Data from './data/a5/a5';
+import * as a1Data from './data/a1/a1';
 import { useState, useEffect } from 'react';
+import { NavLink, useNavigate, Link, Routes, Route } from 'react-router-dom';
 import Card from './Card';
 
 function App() {
-  const [a5, setA5] = useState(a5Answers);
+  const [testData, setTestData] = useState(a5Data);
   const [question, setQuestion] = useState(0);
   const [answer, setAnswer] = useState('');
   const [showAns, setShowAns] = useState(false);
@@ -14,16 +16,35 @@ function App() {
   const [attempted, setAttempted] = useState(1);
   const [percentage, setPercentage] = useState(0);
 
-
   useEffect(() => {
-    setTotal(a5.length);
-  }, [])
+    setQuestion(0);
+    setShowAns(false);
+    setDisableSubmit(false);
+    setScore(0);
+    setTotal(testData.QA.length);
+    setAttempted(1);
+    setPercentage(0);
+  }, [testData])
+
+  // useEffect(() => {
+  //   setTotal(testData.QA.length);
+  // }, [])
+
+  const navigate = useNavigate();
+
+  const changeTest = e => {
+    return e === 'a1'
+    ? setTestData(a1Data)
+    : e === 'a5'
+    ? setTestData(a5Data)
+    : null
+  }
 
   const onClick = e => {
     const { name } = e.target;
     e.preventDefault();
     if (name === 'submit') {
-      if (answer === a5[question].answer.ans) {
+      if (answer === testData.QA[question].answer.ans) {
         setScore(score + 1);
       }
       setShowAns(true);
@@ -42,26 +63,30 @@ function App() {
 
   return (
     <div className="App">
-      <h1>ASE A5 Pracice Test</h1>
+      <section className='test-links'>
+        <div onClick={() => changeTest('a1')}>A1</div>
+        <div onClick={() => changeTest('a5')}>A5</div>
+      </section>
+      <h1>{testData.title}</h1>
       <div className='counter'>
         <p>{`${score}/${attempted} ${percentage}%`}</p>
         <p>{`Total Questions: ${total}`}</p>
       </div>
-      <Card data={a5[question]} key={a5[question].id} setAnswer={setAnswer} setQuestion={setQuestion} showAns={showAns} />
+      <Card data={testData.QA[question]} key={testData.QA[question].id} setAnswer={setAnswer} setQuestion={setQuestion} showAns={showAns} />
       <div className='btns'>
         <input className='btn' type='submit' name='submit' onClick={onClick} disabled={disableSubmit && answer !== ''} />
         <input className='btn' type='button' name='next' onClick={onClick} disabled={!disableSubmit} value='Next' />
       </div>
       <div className='answer-container' hidden={!showAns}>
         <p
-          className={answer === a5[question].answer.ans
+          className={answer === testData.QA[question].answer.ans
             ? "ans-valid"
             : "ans-wrong"}>
-          {answer === a5[question].answer.ans ? "Correct" : "Incorrect"}
+          {answer === testData.QA[question].answer.ans ? "Correct" : "Incorrect"}
         </p>
         <p>Answer:</p>
-        <h3>{a5[question].answer.ans}</h3>
-        <p>{a5[question].answer.description}</p>
+        <h3>{testData.QA[question].answer.ans}</h3>
+        <p>{testData.QA[question].answer.description}</p>
       </div>
     </div>
   );

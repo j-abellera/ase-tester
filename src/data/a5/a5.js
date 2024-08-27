@@ -1,3 +1,4 @@
+const title = 'ASE A5 Practice Test';
 const a5Answers = [
     {
         id: 1,
@@ -1598,4 +1599,4 @@ const a5Answers = [
       }
 ]
 
-export { a5Answers }
+export { a5Answers as QA, title }

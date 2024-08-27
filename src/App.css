@@ -35,6 +35,15 @@
 
 .counter {
   /* border: solid 1px black; */
+  display: flex;
+  justify-content: space-around;
+  width: 800px;
+}
+
+.test-links {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
 }
 
 .App-logo {
