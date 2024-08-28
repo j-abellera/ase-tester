@@ -33,11 +33,20 @@ function App() {
   const navigate = useNavigate();
 
   const changeTest = e => {
-    return e === 'a1'
-    ? setTestData(a1Data)
-    : e === 'a5'
-    ? setTestData(a5Data)
-    : null
+
+    /* eslint-disable no-restricted-globals */
+    const proceed = confirm('Are you sure you want to switch tests? All progress will be lost.');
+    /* eslint-enable no-restricted-globals */
+
+    if (proceed) {
+      return e === 'a1'
+        ? setTestData(a1Data)
+        : e === 'a5'
+          ? setTestData(a5Data)
+          : null
+    } else {
+      return;
+    }
   }
 
   const onClick = e => {
@@ -55,7 +64,7 @@ function App() {
       setAnswer('')
       setQuestion(question + 1);
       setAttempted(attempted + 1);
-      setPercentage(Math.round((score/attempted) * 100));
+      setPercentage(Math.round((score / attempted) * 100));
     } else {
       return null;
     }
@@ -64,10 +73,10 @@ function App() {
   return (
     <div className="App">
       <section className='test-links'>
-        <div onClick={() => changeTest('a1')}>A1</div>
-        <div onClick={() => changeTest('a5')}>A5</div>
+        <div className='link' onClick={() => changeTest('a1')}>A1</div>
+        <div className='link' onClick={() => changeTest('a5')}>A5</div>
       </section>
-      <h1>{testData.title}</h1>
+      <h1 className='test-title'>{testData.title}</h1>
       <div className='counter'>
         <p>{`${score}/${attempted} ${percentage}%`}</p>
         <p>{`Total Questions: ${total}`}</p>

@@ -1,6 +1,7 @@
 .card-container {
     display: flex;
-    width: 800px;
+    width: 90%;
+    /* max-width: 800px; */
     min-height: 300px;
     border: solid 5px black;
     border-radius: 15px;
