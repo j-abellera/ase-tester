@@ -3,6 +3,7 @@
   flex-direction: column;
   text-align: center;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   border: solid 2px green;
   width: 100vw;
@@ -25,7 +26,7 @@
 
 .answer-container {
   border: solid 2px orangered;
-  width: 100vw;
+  padding: 0 15px;
 }
 
 .ans-valid {
